@@ -2,7 +2,6 @@
 #include "Game.hpp"
 #include <glad/glad.h>
 
-
 Game::Game(int width, int height, const std::string& title):
 	width(width), height(height), title(title) {
 	init();
@@ -54,7 +53,7 @@ void Game::init() {
 
     renderer = new Renderer(width, height);
 	if (!renderer) {
-		std::cerr << "Failed to create Renderer\n";
+		std::cerr << "Failed to create Renderer" << std::endl;
 		glfwDestroyWindow(window);
 		glfwTerminate();
 		exit(EXIT_FAILURE);
@@ -64,6 +63,13 @@ void Game::init() {
     }
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
+
+
+	textRenderer = new TextRenderer();
+    textRenderer->init("BitcountGridDouble-VariableFont_CRSV,ELSH,ELXP,slnt,wght.ttf", 30);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 
     snake.clear();
     for (int i = 0; i < snakeLength; ++i) {
@@ -138,7 +144,7 @@ void Game::updateSnake() {
 
     // Check collision with self
     if (std::find(snake.begin(), snake.end(), newHead) != snake.end()) {
-        std::cout << "💀 Game Over! Collision with self.\n";
+        std::cout << "💀 Game Over! Final Score: " << score << std::endl;
         glfwSetWindowShouldClose(window, true);
         return;
     }
@@ -150,7 +156,7 @@ void Game::updateSnake() {
     if (newHead == foodPosition) {
         snakeLength++;
         score += 5;
-        std::cout << "🍎 Food eaten! Score: " << score << "\n";
+        std::cout << "🍎 Food eaten! Score: " << score << std::endl;
         spawnFood();
     }
 
@@ -196,18 +202,11 @@ void Game::spawnFood() {
     } while (std::find(snake.begin(), snake.end(), foodPosition) != snake.end());
 }
 
+
 void Game::render() {
     //Set background color 
 	//glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
-
-    // draw a square at center
-	//renderer->drawRectangle(0.0f, 0.0f, 0.3f, 0.8f, glm::vec3(0.2f, 0.8f, 0.2f));
-
-    //renderer->drawCircle(0.0f, 0.0f, 0.5f, glm::vec3(1.0f, 0.5f, 0.2f)); // orange circle
-
-    //draw the player 
-    //renderer->drawRectangle(playerPosition.x, playerPosition.y, 0.3f, 0.3f, glm::vec3(0.2f, 0.8f, 0.2f));
 
 
     //render the grid 
@@ -235,5 +234,6 @@ void Game::render() {
         renderer->drawRectangle(sx, sy, cw, ch, glm::vec3(0.0f, 1.0f, 0.0f));
     }
 
-
+	// Display score
+    textRenderer->drawText("Score: " + std::to_string(score), -0.95f, 0.9f, 0.002f, glm::vec3(1.0f));
 }

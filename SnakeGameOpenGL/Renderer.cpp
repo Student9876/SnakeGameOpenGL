@@ -17,7 +17,6 @@ Renderer::Renderer(int screenWidth, int screenHeight):width(screenWidth), height
 	};
 
 
-
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
 
@@ -39,25 +38,6 @@ Renderer::~Renderer() {
 	glDeleteBuffers(1, &VBO);
 	glDeleteProgram(shaderProgram);
 }
-
-//void Renderer::drawSquare(float x, float y, float size, const glm::vec3& color) const {
-//	glUseProgram(shaderProgram);
-//
-//	// Create transformation matrix
-//    float aspect = (float)width / (float)height;
-//    glm::mat4 model = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f / aspect, 1.0f, 1.0f));
-//	model = glm::translate(model, glm::vec3(x, y, 0.0f));
-//	model = glm::scale(model, glm::vec3(size, size, 1.0f));
-//
-//	GLuint modelLoc = glGetUniformLocation(shaderProgram, "model");
-//	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, &model[0][0]);
-//
-//	GLuint colorLoc = glGetUniformLocation(shaderProgram, "color");
-//	glUniform3fv(colorLoc, 1, &color[0]);
-//
-//	glBindVertexArray(VAO);
-//	glDrawArrays(GL_TRIANGLES, 0, 6);
-//}
 
 
 void Renderer::drawRectangle(float x, float y, float widthRect, float heightRect, const glm::vec3& color) const {
@@ -138,7 +118,6 @@ void Renderer::drawCircle(float cx, float cy, float radius, const glm::vec3& col
     glDeleteVertexArrays(1, &circleVAO);
     glDeleteBuffers(1, &circleVBO);
 }
-
 
 
 GLuint Renderer::loadShader(const char* vertexPath, const char* fragmentPath) {

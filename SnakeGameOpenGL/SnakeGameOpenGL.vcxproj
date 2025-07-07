@@ -137,12 +137,14 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Renderer.hpp" />
+    <ClCompile Include="TextRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SnakeGameOpenGL.rc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.hpp" />
+    <ClInclude Include="TextRenderer.hpp" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="fragment.glsl">
@@ -154,6 +156,23 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <FileType>Document</FileType>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\Project\CPP\SnakeGameOpenGL\x64\Debug\shaders;%(DestinationFolders)</DestinationFolders>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="text_fragment.glsl">
+      <FileType>Document</FileType>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\Project\CPP\SnakeGameOpenGL\x64\Debug\shaders;%(DestinationFolders)</DestinationFolders>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="text_vertex.glsl">
+      <FileType>Document</FileType>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\Project\CPP\SnakeGameOpenGL\x64\Debug\shaders;%(DestinationFolders)</DestinationFolders>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="BitcountGridDouble-VariableFont_CRSV,ELSH,ELXP,slnt,wght.ttf">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\Project\CPP\SnakeGameOpenGL\x64\Debug\;%(DestinationFolders)</DestinationFolders>
     </CopyFileToFolders>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

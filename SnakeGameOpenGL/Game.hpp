@@ -3,6 +3,7 @@
 #include <GLFW/glfw3.h>
 #include <string>
 #include "Renderer.hpp"
+#include "TextRenderer.hpp"
 #include <deque>
 #include <random>
 
@@ -22,6 +23,7 @@ private:
 	int width, height;
 	std::string title;
 	Renderer* renderer;
+	TextRenderer* textRenderer;
 
 	/*glm::vec2 playerPosition = glm::vec2(0.0f, 0.0f);
 	float playerSpeed = 0.01f;*/
@@ -47,8 +49,10 @@ private:
 	const int gridWidth = 20;
 	const int gridHeight = 20;
 	
+	// Methods
 	void updateDirection(); // input
 	void updateSnake();     // logic
 	void drawGrid(); // rendering
 	void spawnFood(); // random food position
+	void displayScore(); // display score on screen
 };
