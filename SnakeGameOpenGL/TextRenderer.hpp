@@ -22,6 +22,7 @@ public:
 
     bool init(const char* fontPath, int fontSize);
     void drawText(const std::string& text, float x, float y, float scale, glm::vec3 color);
+    void clearText();
     GLuint createShaderProgram(const char* vert, const char* frag);
 	std::string loadShaderSource(const char* path);
 };

@@ -8,7 +8,7 @@
 #include <random>
 
 enum class Direction { UP, DOWN, LEFT, RIGHT };
-
+enum class GameState { Playing, GameOver };
 
 class Game {
 public:
@@ -17,6 +17,7 @@ public:
 
 	void run();
 	int score = 0;
+	GameState state = GameState::Playing;
 
 private:
 	GLFWwindow* window;
@@ -24,9 +25,6 @@ private:
 	std::string title;
 	Renderer* renderer;
 	TextRenderer* textRenderer;
-
-	/*glm::vec2 playerPosition = glm::vec2(0.0f, 0.0f);
-	float playerSpeed = 0.01f;*/
 
 	void init();
 	void update();
@@ -38,8 +36,8 @@ private:
 	
 	glm::ivec2 snakeHead = { 10, 10 };
 	Direction snakeDirection = Direction::RIGHT;
-	
 	std::deque<glm::ivec2> snake;  // body: [head, ..., tail]
+	
 	glm::ivec2 foodPosition;
 
 	int snakeLength = 1; // initial length
@@ -54,5 +52,5 @@ private:
 	void updateSnake();     // logic
 	void drawGrid(); // rendering
 	void spawnFood(); // random food position
-	void displayScore(); // display score on screen
+	void restartGame();
 };

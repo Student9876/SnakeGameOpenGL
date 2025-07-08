@@ -97,24 +97,12 @@ void Game::run() {
 
 void Game::update() {
 	// TODO: input and logic
-
-   /* if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-        playerPosition.y += playerSpeed;
-        std::cout << "Player position: (" << playerPosition.x << ", " << playerPosition.y << ")" << std::endl;
+    if (state == GameState::GameOver) {
+        if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS) {
+            restartGame();
+        }
+        return;
     }
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-        playerPosition.y -= playerSpeed;
-		std::cout << "Player position: (" << playerPosition.x << ", " << playerPosition.y << ")" << std::endl;
-    }
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-        playerPosition.x -= playerSpeed;
-		std::cout << "Player position: (" << playerPosition.x << ", " << playerPosition.y << ")" << std::endl;
-    }
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-        playerPosition.x += playerSpeed;
-		std::cout << "Player position: (" << playerPosition.x << ", " << playerPosition.y << ")" << std::endl;
-    }*/
-
 
     updateDirection();
 
@@ -127,6 +115,21 @@ void Game::update() {
 
 }
 
+void Game::restartGame() {
+	snake.clear();
+	snakeLength = 1;
+	for (int i = 0; i < snakeLength; ++i) {
+		snake.push_back(glm::ivec2(10 - i, 10)); // horizontal right
+	}
+	spawnFood();
+	score = 0;
+	state = GameState::Playing;
+	snakeDirection = Direction::RIGHT;
+	moveTimer = 0.0f;
+	std::cout << "Game restarted!" << std::endl;
+	glfwSetWindowShouldClose(window, false);
+    render();
+}
 
 void Game::updateSnake() {
     glm::ivec2 newHead = snake.front();
@@ -144,9 +147,8 @@ void Game::updateSnake() {
 
     // Check collision with self
     if (std::find(snake.begin(), snake.end(), newHead) != snake.end()) {
-        std::cout << "💀 Game Over! Final Score: " << score << std::endl;
-        glfwSetWindowShouldClose(window, true);
-        return;
+        std::cout << "Game Over! Final Score: " << score << std::endl;
+		state = GameState::GameOver;
     }
 
     // Insert new head
@@ -156,7 +158,7 @@ void Game::updateSnake() {
     if (newHead == foodPosition) {
         snakeLength++;
         score += 5;
-        std::cout << "🍎 Food eaten! Score: " << score << std::endl;
+        std::cout << "Food eaten! Score: " << score << std::endl;
         spawnFood();
     }
 
@@ -205,35 +207,37 @@ void Game::spawnFood() {
 
 void Game::render() {
     //Set background color 
-	//glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
 
 
     //render the grid 
     drawGrid();
 
-    //render snake head 
-    float cellWidth = 2.0f / gridWidth;
-    float cellHeight = 2.0f / gridHeight;
+    if (state == GameState::Playing) {
+        // Display score
+        textRenderer->drawText("Score: " + std::to_string(score), -0.95f, 0.9f, 0.002f, glm::vec3(1.0f));
 
-    float x = -1.0f + snakeHead.x * cellWidth;
-    float y = -1.0f + snakeHead.y * cellHeight;
 
-    float cw = 2.0f / gridWidth;
-    float ch = 2.0f / gridHeight;
+        //render snake head 
+        float cw = 2.0f / gridWidth;
+        float ch = 2.0f / gridHeight;
 
-    // Draw food 🍎
-    float fx = -1.0f + foodPosition.x * cw;
-    float fy = -1.0f + foodPosition.y * ch;
-    renderer->drawRectangle(fx, fy, cw, ch, glm::vec3(1.0f, 0.0f, 0.0f));
+        // Draw food
+        float fx = -1.0f + foodPosition.x * cw;
+        float fy = -1.0f + foodPosition.y * ch;
+        renderer->drawRectangle(fx, fy, cw, ch, glm::vec3(1.0f, 0.0f, 0.0f));
 
-    // Draw snake 🐍
-    for (const auto& segment : snake) {
-        float sx = -1.0f + segment.x * cw;
-        float sy = -1.0f + segment.y * ch;
-        renderer->drawRectangle(sx, sy, cw, ch, glm::vec3(0.0f, 1.0f, 0.0f));
+        // Draw snake
+        for (const auto& segment : snake) {
+            float sx = -1.0f + segment.x * cw;
+            float sy = -1.0f + segment.y * ch;
+            renderer->drawRectangle(sx, sy, cw, ch, glm::vec3(0.0f, 1.0f, 0.0f));
+        }
     }
-
-	// Display score
-    textRenderer->drawText("Score: " + std::to_string(score), -0.95f, 0.9f, 0.002f, glm::vec3(1.0f));
+    else if (state == GameState::GameOver) {
+        textRenderer->drawText("Game Over!", -0.2f, 0.1f, 0.002f, glm::vec3(1, 0, 0));
+        textRenderer->drawText("Press R to Restart", -0.3f, -0.1f, 0.002f, glm::vec3(1, 1, 1));
+        textRenderer->drawText("Score: " + std::to_string(score), -0.2f, -0.3f, 0.002f, glm::vec3(1, 1, 0));
+    }
 }

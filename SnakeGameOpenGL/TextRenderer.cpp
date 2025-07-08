@@ -124,6 +124,18 @@ void TextRenderer::drawText(const std::string& text, float x, float y, float sca
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
+void TextRenderer::clearText() {
+	for (auto& pair : characters) {
+		glDeleteTextures(1, &pair.second.textureID);
+	}
+	characters.clear();
+	glDeleteVertexArrays(1, &VAO);
+	glDeleteBuffers(1, &VBO);
+	glDeleteProgram(shaderProgram);
+	std::cout << "TextRenderer cleared" << std::endl;
+}
+
+
 std::string TextRenderer::loadShaderSource(const char* path) {
     std::ifstream file(path);
     std::stringstream buffer;
