@@ -22,10 +22,10 @@
     <Filter Include="shaders">
       <UniqueIdentifier>{aa05ccf9-1afc-4207-a9de-faee6c2623c4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="assests">
+    <Filter Include="assets">
       <UniqueIdentifier>{9afa28a1-2752-4f51-86fe-a2a6b247ecb1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="assests\fonts">
+    <Filter Include="assets\fonts">
       <UniqueIdentifier>{bd9eec25-a4a2-4295-a0c9-0e0da55ea1cb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -73,7 +73,7 @@
       <Filter>shaders</Filter>
     </CopyFileToFolders>
     <CopyFileToFolders Include="BitcountGridDouble-VariableFont_CRSV,ELSH,ELXP,slnt,wght.ttf">
-      <Filter>assests\fonts</Filter>
+      <Filter>assets\fonts</Filter>
     </CopyFileToFolders>
   </ItemGroup>
 </Project>

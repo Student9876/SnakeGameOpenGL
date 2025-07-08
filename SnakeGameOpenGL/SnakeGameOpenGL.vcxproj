@@ -172,7 +172,8 @@
     <CopyFileToFolders Include="BitcountGridDouble-VariableFont_CRSV,ELSH,ELXP,slnt,wght.ttf">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <FileType>Document</FileType>
-      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\Project\CPP\SnakeGameOpenGL\x64\Debug\;%(DestinationFolders)</DestinationFolders>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\Project\CPP\SnakeGameOpenGL\x64\Debug\assets\fonts;%(DestinationFolders)</DestinationFolders>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
     </CopyFileToFolders>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

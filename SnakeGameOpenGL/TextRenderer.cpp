@@ -1,4 +1,3 @@
-// TextRenderer.cpp
 #include "TextRenderer.hpp"
 #include <iostream>
 #include <glm/gtc/matrix_transform.hpp>
@@ -10,7 +9,7 @@ bool TextRenderer::init(const char* fontPath, int fontSize) {
     // Init FreeType
     FT_Library ft;
     if (FT_Init_FreeType(&ft)) {
-        std::cerr << "ERROR::FREETYPE: Could not init FreeType Library" << std::endl;
+        std::cerr << "ERROR: Could not init FreeType Library" << std::endl;
         return false;
     }
     else {
@@ -19,7 +18,7 @@ bool TextRenderer::init(const char* fontPath, int fontSize) {
 
     FT_Face face;
     if (FT_New_Face(ft, fontPath, 0, &face)) {
-        std::cerr << "ERROR::FREETYPE: Failed to load font" << std::endl;
+        std::cerr << "ERROR: Failed to load font" << std::endl;
         return false;
 	}
 	else {
@@ -144,6 +143,7 @@ std::string TextRenderer::loadShaderSource(const char* path) {
         return "";
     }
     buffer << file.rdbuf();
+	std::cout << "Shader loaded successfully: " << path << std::endl;
     return buffer.str();
 }
 

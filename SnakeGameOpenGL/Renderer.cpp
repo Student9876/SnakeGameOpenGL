@@ -129,6 +129,7 @@ GLuint Renderer::loadShader(const char* vertexPath, const char* fragmentPath) {
             return "";
         }
         buffer << file.rdbuf();
+		std::cout << "Shader file loaded successfully: " << path << std::endl;
         return buffer.str();
         };
 
